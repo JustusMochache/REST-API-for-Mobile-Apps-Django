@@ -14,8 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from rest_framework import routers
+from fishes import views
+from django.urls import*
+
+
+
+router = routers.DefaultRouter()
+#makes sure that the API endpoints work
+router.register(r'api/fishes', views.FishViewSet)
+admin.autodiscover()
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Examples:
+    # url(r'^$', 'marine.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+
+    path(r'^admin/', admin.site.urls),
+    path(r'^', router.urls),
+    path(r'^api-auth/', 'rest_framework.urls')
 ]
